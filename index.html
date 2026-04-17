@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="theme-color" content="#0d0f1a" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Fútbol Hub" />
+  <link rel="apple-touch-icon" href="https://em-content.zobj.net/source/apple/354/soccer-ball_26bd.png" />
+  <title>⚽ Fútbol Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:          #0d0f1a;
+      --card:        #161929;
+      --card2:       #1c2035;
+      --border:      #2a2f4a;
+      --gold:        #f5c518;
+      --blue:        #4a9eff;
+      --green:       #00e676;
+      --white:       #e8eaf6;
+      --muted:       #7880a0;
+      --boca-gold:   #FFD700;
+      --psg-red:     #da291c;
+      --info-purple: #9c6eff;
+      --radius-card: 16px;
+      --radius-sm:   12px;
+      --gap:         10px;
+      --font-display:'Bebas Neue', sans-serif;
+      --font-body:   'Nunito', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: var(--font-body);
+      min-height: 100dvh;
+      padding-bottom: 48px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: linear-gradient(135deg, #0d0f1a 0%, #161929 100%);
+      border-bottom: 2px solid var(--gold);
+      padding: 14px 16px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .header-title { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 2px; color: var(--gold); }
+    .header-date  { text-align: right; line-height: 1.5; }
+    .hdr-day  { display: block; font-size: 0.72rem; color: var(--muted); }
+    .hdr-time { display: block; font-size: 0.82rem; font-weight: 800; color: var(--white); }
+
+    /* ── SECTIONS ── */
+    .section { padding: 16px 14px 6px; }
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      letter-spacing: 3px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 400;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* ── GRIDS ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .grid-4 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+
+    /* ── CARD BUTTONS ── */
+    .btn-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 18px 10px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      color: var(--white);
+      min-height: 110px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s ease;
+      font-family: var(--font-body);
+      appearance: none;
+      -webkit-appearance: none;
+      animation: fadeUp 0.4s ease both;
+    }
+    .btn-card:active        { transform: scale(0.96); }
+    .btn-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+    .btn-card:nth-child(1) { animation-delay: 0.04s; }
+    .btn-card:nth-child(2) { animation-delay: 0.10s; }
+    .btn-card:nth-child(3) { animation-delay: 0.16s; }
+    .btn-card:nth-child(4) { animation-delay: 0.22s; }
+    .btn-card:nth-child(5) { animation-delay: 0.28s; }
+    .btn-card:nth-child(6) { animation-delay: 0.34s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn-wide {
+      flex-direction: row;
+      justify-content: flex-start;
+      padding: 16px 18px;
+      gap: 14px;
+      min-height: 70px;
+      margin-top: var(--gap);
+      border-radius: 14px;
+    }
+    .btn-wide-text { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+    .btn-icon  { font-size: 1.8rem; line-height: 1; }
+    .btn-label { font-size: 0.8rem; font-weight: 800; letter-spacing: 0.4px; line-height: 1.3; }
+    .btn-sub   { font-size: 0.7rem; color: var(--muted); }
+    .arrow     { margin-left: auto; color: var(--muted); font-size: 1.2rem; }
+    .shield    { width: 44px; height: 44px; }
+
+    /* ── TEAM THEMES ── */
+    .btn-boca   { background: linear-gradient(145deg,#001f5e,#003087 60%,#002070); border: 2px solid #FFD700; }
+    .btn-boca .btn-label { color: #FFD700; text-shadow: 0 1px 4px rgba(0,0,0,.7); }
+
+    .btn-river  { background: linear-gradient(145deg,#7a0000,#cc0000 55%,#8c0000); border: 2px solid #ff6b6b; }
+    .btn-river .btn-label { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.7); }
+
+    .btn-racing { background: linear-gradient(145deg,#1a1a1a,#2d2d2d 55%,#111); border: 2px solid #e0e0e0; }
+    .btn-racing .btn-label { color: #e0e0e0; }
+
+    .btn-indep  { background: linear-gradient(145deg,#6b0000,#cc0000 55%,#4a0000); border: 2px solid #ff4444; }
+    .btn-indep .btn-label  { color: #ffcccc; }
+
+    .btn-tabla  { background: linear-gradient(145deg,#1a2744,#243560); border-color: var(--blue); }
+    .btn-tabla .btn-label  { color: #7ec8ff; }
+
+    .btn-madrid { background: linear-gradient(145deg,#1a1a2e,#2d2d44); border: 2px solid var(--gold); }
+    .btn-madrid .btn-label { color: var(--gold); }
+
+    .btn-psg    { background: linear-gradient(145deg,#001a3a,#004170 60%,#001a3a); border: 2px solid var(--psg-red); }
+    .btn-psg .btn-label    { color: #7ec8ff; }
+
+    .btn-inter  { background: linear-gradient(145deg,#002060,#003DA5 55%,#111); border: 2px solid #6699ff; }
+    .btn-inter .btn-label  { color: #a0c0ff; }
+
+    .btn-miami  { background: linear-gradient(145deg,#0a1628,#0e2040 55%,#06101e); border: 2px solid #ff69b4; }
+    .btn-miami .btn-label  { color: #ffb3d9; }
+
+    .btn-lib    { background: linear-gradient(145deg,#003320,#00843D 60%,#004d28); border: 2px solid var(--green); }
+    .btn-lib .btn-label    { color: #80ffba; }
+
+    .btn-mundial { background: linear-gradient(145deg,#1a0a2e,#3d1a6e 60%,#1a0a2e); border: 2px solid #c084fc; }
+    .btn-mundial .btn-label { color: #e9d5ff; }
+
+    .btn-info   { background: linear-gradient(145deg,#1a1030,#2a1a50); border: 2px solid var(--info-purple); }
+    .btn-info .btn-label   { color: #c9a8ff; }
+
+    /* ── MODAL SYSTEM ── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.82);
+      z-index: 100;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .modal-overlay[hidden] { display: none; }
+
+    .modal-sheet {
+      background: var(--card2);
+      border-radius: 24px 24px 0 0;
+      border-top: 2px solid var(--border);
+      width: 100%;
+      max-height: 88dvh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 20px 16px 36px;
+      animation: slideUp 0.28s ease;
+      overscroll-behavior: contain;
+    }
+    .modal-sheet::-webkit-scrollbar       { width: 4px; }
+    .modal-sheet::-webkit-scrollbar-track { background: transparent; }
+    .modal-sheet::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+    .modal-handle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 16px; }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 400;
+    }
+    .modal-close {
+      margin-left: auto;
+      background: var(--border);
+      border: none;
+      color: var(--white);
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .modal-close:hover        { background: #3a3f5c; }
+    .modal-close:focus-visible { outline: 2px solid var(--gold); }
+
+    .modal-notice { font-size: 0.78rem; color: var(--muted); margin-bottom: 12px; line-height: 1.5; }
+
+    /* ── LINK GRID ── */
+    .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+    .ext-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      color: var(--white);
+      font-size: 0.8rem;
+      font-weight: 700;
+      transition: background 0.15s, transform 0.12s;
+    }
+    .ext-link:active        { transform: scale(0.96); background: #1f2540; }
+    .ext-link:focus-visible { outline: 2px solid var(--gold); }
+
+    /* ── SEARCH BOX ── */
+    .search-box { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 12px; }
+    .search-label { display: block; font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .search-row { display: flex; gap: 8px; }
+
+    input[type="search"] {
+      flex: 1;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 11px 14px;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      outline: none;
+      min-width: 0;
+    }
+    input[type="search"]::placeholder { color: var(--muted); }
+    input[type="search"]:focus        { border-color: var(--blue); }
+
+    .search-btn {
+      background: var(--gold);
+      color: #000;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0 16px;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .search-btn:active        { opacity: 0.8; }
+    .search-btn:focus-visible { outline: 2px solid var(--white); }
+
+    /* ── PILLS ── */
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-decoration: none;
+      background: rgba(255,255,255,0.07);
+      color: var(--white);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    .pill:active        { background: rgba(255,255,255,0.15); }
+    .pill:focus-visible { outline: 2px solid var(--gold); }
+
+    /* ── INFO BLOCKS ── */
+    .info-block { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 10px; }
+    .info-block-title { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; font-weight: 700; }
+
+    /* ── CALENDAR ── */
+    .cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .cal-month-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+    }
+    .cal-nav {
+      background: var(--border);
+      border: none;
+      color: var(--white);
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cal-nav:active { opacity: 0.7; }
+
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+      text-align: center;
+    }
+    .cal-dow {
+      font-size: 0.65rem;
+      color: var(--muted);
+      font-weight: 800;
+      padding: 4px 0;
+      text-transform: uppercase;
+    }
+    .cal-day {
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 2px;
+      border-radius: 8px;
+      line-height: 1;
+      position: relative;
+    }
+    .cal-day.empty    { background: transparent; }
+    .cal-day.today    { background: var(--gold); color: #000; font-weight: 800; border-radius: 50%; }
+    .cal-day.holiday  { color: #ff6b6b; font-weight: 800; }
+    .cal-day.holiday::after {
+      content: '';
+      display: block;
+      width: 4px; height: 4px;
+      background: #ff6b6b;
+      border-radius: 50%;
+      margin: 2px auto 0;
+    }
+    .cal-day.today.holiday { background: #ff4444; color: #fff; }
+
+    .cal-legend { margin-top: 10px; font-size: 0.7rem; color: var(--muted); display: flex; gap: 14px; }
+    .cal-legend span { display: flex; align-items: center; gap: 4px; }
+
+    .holiday-detail {
+      margin-top: 12px;
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+    }
+    .holiday-detail-title { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; font-weight: 700; }
+
+    /* ── FERIADOS LIST ── */
+    .feriado-list { list-style: none; }
+    .feriado-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.82rem;
+    }
+    .feriado-list li:last-child { border-bottom: none; }
+    .feriado-list li.past span:first-child { color: var(--muted); }
+    .feriado-list time { color: var(--gold); font-weight: 800; font-size: 0.78rem; white-space: nowrap; margin-left: 8px; }
+    .feriado-list li.past time { color: var(--muted); }
+
+    /* ── PHONE LIST ── */
+    .phone-list { list-style: none; }
+    .phone-list li { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; }
+    .phone-list li:last-child { border-bottom: none; }
+    .phone-list a { color: var(--blue); font-weight: 800; text-decoration: none; font-size: 0.85rem; }
+    .phone-list a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-title">⚽ FÚTBOL HUB</div>
+    <div class="header-date">
+      <span class="hdr-day" id="hdrDay">—</span>
+      <span class="hdr-time" id="hdrTime">—</span>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── FÚTBOL ARGENTINO ── -->
+    <section class="section" aria-label="Fútbol Argentino">
+      <h2 class="section-label">🇦🇷 Fútbol Argentino</h2>
+
+      <div class="grid-2">
+        <button class="btn-card btn-boca" aria-label="Boca Juniors" data-modal="modal-boca">
+          <svg class="shield" viewBox="0 0 100 110" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="bocaG" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#0038a8"/><stop offset="100%" stop-color="#002070"/>
+              </linearGradient>
+            </defs>
+            <path d="M50 5 L95 25 L95 65 Q95 95 50 108 Q5 95 5 65 L5 25 Z" fill="url(#bocaG)" stroke="#FFD700" stroke-width="3"/>
+            <rect x="5" y="43" width="90" height="16" fill="#FFD700"/>
+            <text x="50" y="38" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="13" font-weight="900" fill="#FFD700">BOCA</text>
+            <text x="50" y="75" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="9" font-weight="900" fill="#FFD700">JUNIORS</text>
+          </svg>
+          <span class="btn-label">BOCA JUNIORS</span>
+        </button>
+
+        <button class="btn-card btn-river" aria-label="River Plate" data-modal="modal-river">
+          <svg class="shield" viewBox="0 0 100 110" aria-hidden="true" focusable="false">
+            <path d="M50 5 L95 25 L95 65 Q95 95 50 108 Q5 95 5 65 L5 25 Z" fill="#f8f8f8" stroke="#cc0000" stroke-width="3"/>
+            <path d="M18 52 L82 52 L82 64 L18 64 Z" fill="#cc0000" transform="rotate(-30,50,58)"/>
+            <text x="50" y="80" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="10" font-weight="900" fill="#cc0000">RIVER PLATE</text>
+          </svg>
+          <span class="btn-label">RIVER PLATE</span>
+        </button>
+
+        <button class="btn-card btn-racing" aria-label="Racing Club" data-modal="modal-racing">
+          <svg class="shield" viewBox="0 0 100 110" aria-hidden="true" focusable="false">
+            <path d="M50 5 L95 25 L95 65 Q95 95 50 108 Q5 95 5 65 L5 25 Z" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+            <!-- celeste stripes -->
+            <clipPath id="racingClip"><path d="M50 5 L95 25 L95 65 Q95 95 50 108 Q5 95 5 65 L5 25 Z"/></clipPath>
+            <g clip-path="url(#racingClip)">
+              <rect x="0"  y="0" width="20" height="120" fill="#87CEEB"/>
+              <rect x="40" y="0" width="20" height="120" fill="#87CEEB"/>
+              <rect x="80" y="0" width="20" height="120" fill="#87CEEB"/>
+            </g>
+            <path d="M50 5 L95 25 L95 65 Q95 95 50 108 Q5 95 5 65 L5 25 Z" fill="none" stroke="#1a1a1a" stroke-width="3"/>
+            <text x="50" y="72" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8" font-weight="900" fill="#1a1a1a">RACING</text>
+            <text x="50" y="83" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="7" font-weight="900" fill="#1a1a1a">CLUB</text>
+          </svg>
+          <span class="btn-label">RACING CLUB</span>
+        </button>
+
+        <button class="btn-card btn-indep" aria-label="Independiente" data-modal="modal-indep">
+          <svg class="shield" viewBox="0 0 100 110" aria-hidden="true" focusable="false">
+            <path d="M50 5 L95 25 L95 65 Q95 95 50 108 Q5 95 5 65 L5 25 Z" fill="#cc0000" stroke="#8b0000" stroke-width="3"/>
+            <text x="50" y="42" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8" font-weight="900" fill="#fff">CLUB</text>
+            <text x="50" y="55" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="7" font-weight="900" fill="#fff">ATLÉTICO</text>
+            <text x="50" y="68" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="7" font-weight="900" fill="#fff">INDEPENDIENTE</text>
+            <text x="50" y="88" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#fff">★</text>
+          </svg>
+          <span class="btn-label">INDEPENDIENTE</span>
+        </button>
+      </div>
+
+      <button class="btn-card btn-tabla btn-wide" data-modal="modal-tabla" aria-label="Tabla de posiciones">
+        <span class="btn-icon" aria-hidden="true">🏆</span>
+        <span class="btn-wide-text">
+          <span class="btn-label">Tabla de Posiciones</span>
+          <span class="btn-sub">Liga Profesional Argentina</span>
+        </span>
+        <span class="arrow" aria-hidden="true">›</span>
+      </button>
+    </section>
+
+    <!-- ── EUROPA & INTERNACIONAL ── -->
+    <section class="section" aria-label="Fútbol Internacional">
+      <h2 class="section-label">🌍 Internacional</h2>
+
+      <div class="grid-3">
+        <button class="btn-card btn-madrid" data-modal="modal-madrid" aria-label="Real Madrid">
+          <svg class="shield" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+            <circle cx="50" cy="50" r="46" fill="#1a1a2e" stroke="#f5c518" stroke-width="3"/>
+            <text x="50" y="35" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="9" fill="#f5c518">REAL</text>
+            <text x="50" y="52" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="12" font-weight="900" fill="#fff">MADRID</text>
+            <text x="50" y="68" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="#f5c518">C · F ·</text>
+          </svg>
+          <span class="btn-label">REAL MADRID</span>
+        </button>
+
+        <button class="btn-card btn-psg" data-modal="modal-psg" aria-label="PSG">
+          <svg class="shield" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+            <circle cx="50" cy="50" r="46" fill="#004170" stroke="#da291c" stroke-width="3"/>
+            <text x="50" y="42" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="18" font-weight="900" fill="#fff">PSG</text>
+            <text x="50" y="62" text-anchor="middle" font-family="Arial,sans-serif" font-size="7" fill="#a0c0ff">PARIS SAINT-GERMAIN</text>
+            <text x="50" y="80" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" fill="#da291c">⚜</text>
+          </svg>
+          <span class="btn-label">PSG</span>
+        </button>
+
+        <button class="btn-card btn-inter" data-modal="modal-inter" aria-label="Inter de Milán">
+          <svg class="shield" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+            <circle cx="50" cy="50" r="46" fill="#003DA5" stroke="#6699ff" stroke-width="3"/>
+            <path d="M50 4 A46 46 0 0 1 96 50 L50 50 Z" fill="#111"/>
+            <text x="50" y="46" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="18" font-weight="900" fill="#fff">IN</text>
+            <text x="50" y="66" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="18" font-weight="900" fill="#fff">ER</text>
+          </svg>
+          <span class="btn-label">INTER MILÁN</span>
+        </button>
+
+        <!-- Inter Miami — ocupa la fila completa de 3, centrado con col-span trick -->
+      </div>
+
+      <!-- Inter Miami ancho -->
+      <button class="btn-card btn-miami btn-wide" data-modal="modal-miami" aria-label="Inter Miami CF" style="margin-top:8px">
+        <svg width="42" height="42" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+          <circle cx="50" cy="50" r="46" fill="#0e2040" stroke="#ff69b4" stroke-width="2.5"/>
+          <text x="50" y="36" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="9" fill="#ff69b4">INTER</text>
+          <text x="50" y="52" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="14" font-weight="900" fill="#fff">MIAMI</text>
+          <text x="50" y="68" text-anchor="middle" font-family="Arial,sans-serif" font-size="8" fill="#ff69b4">C · F ·</text>
+          <text x="50" y="84" text-anchor="middle" font-family="Arial,sans-serif" font-size="10" fill="#ffb3d9">🌴</text>
+        </svg>
+        <span class="btn-wide-text">
+          <span class="btn-label" style="color:#ffb3d9">Inter Miami CF</span>
+          <span class="btn-sub">MLS · Messi · Noticias</span>
+        </span>
+        <span class="arrow" aria-hidden="true">›</span>
+      </button>
+    </section>
+
+    <!-- ── COPA LIBERTADORES + MUNDIAL ── -->
+    <section class="section" aria-label="Competencias internacionales">
+      <h2 class="section-label">🌎 Competencias</h2>
+
+      <button class="btn-card btn-lib btn-wide" data-modal="modal-lib" aria-label="Copa Libertadores 2025">
+        <svg width="42" height="42" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+          <circle cx="50" cy="50" r="46" fill="#005228" stroke="#00e676" stroke-width="2.5"/>
+          <text x="50" y="38" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="9" fill="#80ffba">COPA</text>
+          <text x="50" y="52" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8" fill="#fff">LIBERTADORES</text>
+          <text x="50" y="74" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" fill="#00e676">🏆</text>
+        </svg>
+        <span class="btn-wide-text">
+          <span class="btn-label" style="color:#80ffba">Copa Libertadores 2025</span>
+          <span class="btn-sub">Resultados · Grupos · Noticias</span>
+        </span>
+        <span class="arrow" aria-hidden="true">›</span>
+      </button>
+
+      <button class="btn-card btn-mundial btn-wide" data-modal="modal-mundial" aria-label="Mundial de Fútbol 2026" style="margin-top:8px">
+        <svg width="42" height="42" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+          <circle cx="50" cy="50" r="46" fill="#1a0a2e" stroke="#c084fc" stroke-width="2.5"/>
+          <text x="50" y="36" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="8" fill="#e9d5ff">FIFA</text>
+          <text x="50" y="52" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="11" font-weight="900" fill="#fff">MUNDIAL</text>
+          <text x="50" y="65" text-anchor="middle" font-family="Arial Black,sans-serif" font-size="11" fill="#c084fc">2026</text>
+          <text x="50" y="82" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" fill="#e9d5ff">🌍</text>
+        </svg>
+        <span class="btn-wide-text">
+          <span class="btn-label" style="color:#e9d5ff">Mundial FIFA 2026</span>
+          <span class="btn-sub">USA · México · Canadá · Noticias</span>
+        </span>
+        <span class="arrow" aria-hidden="true">›</span>
+      </button>
+    </section>
+
+    <!-- ── INFO GENERAL ── -->
+    <section class="section" aria-label="Info y utilidades">
+      <h2 class="section-label">🛠 Info & Utilidades</h2>
+      <button class="btn-card btn-info btn-wide" data-modal="modal-info" aria-label="Panel de información general">
+        <span class="btn-icon" aria-hidden="true">🌐</span>
+        <span class="btn-wide-text">
+          <span class="btn-label" style="color:#c9a8ff">Panel de Info General</span>
+          <span class="btn-sub">Clima · Calendario · Teléfonos · Buscador</span>
+        </span>
+        <span class="arrow" aria-hidden="true">›</span>
+      </button>
+    </section>
+
+  </main>
+
+
+  <!-- ══════════════════════════════════════ MODALES ══════════════════════════════════════ -->
+
+  <!-- BOCA -->
+  <div class="modal-overlay" id="modal-boca" role="dialog" aria-modal="true" aria-label="Boca Juniors" hidden>
+    <div class="modal-sheet">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <div class="modal-title" style="color:#FFD700">🔵🟡 BOCA JUNIORS
+        <button class="modal-close" aria-label="Cerrar" data-close="modal-boca">✕</button>
+      </div>
+      <div class="link-grid">
+        <a class="ext-link" href="https://news.google.com/search?q=Boca+Juniors&hl=es-419" target="_blank" rel="noopener noreferrer">📰 Google News</a>
+        <a class="ext-link" href="https://www.ole.com.ar/boca" target="_blank" rel="noopener noreferrer">⚽ Olé</a>
+        <a class="ext-link" href="https://www.infobae.com/deportes/futbol/boca-juniors/" target="_blank" rel="noopener noreferrer">📱 Infobae</a>
+        <a class="ext-link" href="https://twitter.com/search?q=Boca+Juniors&f=live" target="_blank" rel="noopener noreferrer">🐦 Twitter/X</a>
+        <a class="ext-link" href="https://www.youtube.com/results?search_query=Boca+Juniors+hoy" target="_blank" rel="noopener noreferrer">▶️ YouTube</a>
+        <a class="ext-link" href="https://www.google.com/search?q=Boca+Juniors+resultados+hoy" target="_blank" rel="noopener noreferrer">🔍 Resultados hoy</a>
+      </div>
+      <div class="search-box">
+        <label for="q-boca" class="search-label">Buscar sobre Boca</label>
+        <div class="search-row">
+          <input id="q-boca" type="search" placeholder="ej: fixture, plantel, pases..." />
+          <button class="search-btn" data-team="Boca Juniors" data-input="q-boca">Buscar</button>
+        </div>
+      </div>
+      <div class="pill-row">
+        <a class="pill" href="https://www.google.com/search?q=Boca+Juniors+fixture+2025" target="_blank" rel="noopener noreferrer">📅 Fixture</a>
+        <a class="pill" href="https://www.google.com/search?q=Boca+Juniors+goleadores+2025" target="_blank" rel="noopener noreferrer">⚽ Goleadores</a>
+        <a class="pill" href="https://www.google.com/search?q=Boca+Juniors+transferencias+2026" target="_blank" rel="noopener noreferrer">🔄 Pases</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIVER -->
+  <div class="modal-overlay" id="modal-river" role="dialog" aria-modal="true" aria-label="River Plate" hidden>
+    <div class="modal-sheet">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <div class="modal-title" style="color:#ff6b6b">🔴⚪ RIVER PLATE
+        <button class="modal-close" aria-label="Cerrar" data-close="modal-river">✕</button>
+      </div>
+      <div class="link-grid">
+        <a class="ext-link" href="https://news.google.com/search?q=River+Plate+Argentina&hl=es-419" target="_blank" rel="noopener noreferrer">📰 Google News</a>
+        <a class="ext-link" href="https://www.ole.com.ar/river" target="_blank" rel="noopener noreferrer">⚽ Olé</a>
+        <a class="ext-link" href="https://www.infobae.com/deportes/futbol/river-plate/" target="_blank" rel="noopener noreferrer">📱 Infobae</a>
+        <a class="ext-link" href="https://twitter.com/search?q=River+Plate&f=live" target="_blank" rel="noopener noreferrer">🐦 Twitter/X</a>
+        <a class="ext-link" href="https://www.youtube.com/results?search_query=River+Plate+hoy" target="_blank" rel="noopener noreferrer">▶️ YouTube</a>
+        <a class="ext-link" href="https://www.google.com/search?q=River+Plate+resultados+hoy" target="_blank" rel="noopener noreferrer">🔍 Resultados hoy</a>
+      </div>
+      <div class="search-box">
+        <label for="q-river" class="search-label">Buscar sobre River</label>
+        <div class="search-row">
+          <input id="q-river" type="search" placeholder="ej: Gallardo, fixture, pases..." />
+          <button class="search-btn" data-team="River Plate" data-input="q-river">Buscar</button>
+        </div>
+      </div>
+      <div class="pill-row">
+        <a class="pill" href="https://www.google.com/search?q=River+Plate+fixture+2026" target="_blank" rel="noopener noreferrer">📅 Fixture</a>
+        <a class="pill" href="https://www.google.com/search?q=River+Plate+goleadores+2026" target="_blank" rel="noopener noreferrer">⚽ Goleadores</a>
+        <a class="pill" href="https://www.google.com/search?q=River+Plate+transferencias+2026" target="_blank" rel="noopener noreferrer">🔄 Pases</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- RACING -->
+  <div class="modal-overlay" id="modal-racing" role="dialog" aria-modal="true" aria-label="Racing Club" hidden>
+    <div class="modal-sheet">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <div class="modal-title" style="color:#e0e0e0">⚪🔵 RACING CLUB
+        <button class="modal-close" aria-label="Cerrar" data-close="modal-racing">✕</button>
+      </div>
+      <div class="link-grid">
+        <a class="ext-link" href="https://news.google.com/search?q=Racing+Club+Argentina&hl=es-419" target="_blank" rel="noopener noreferrer">📰 Google News</a>
+        <a class="ext-link" href="https://www.ole.com.ar/racing" target="_blank" rel="noopener noreferrer">⚽ Olé</a>
+        <a class="ext-link" href="https://www.infobae.com/deportes/futbol/racing-club/" target="_blank" rel="noopener noreferrer">📱 Infobae</a>
+        <a class="ext-link" href="https://twitter.com/search?q=Racing+Club+Argentina&f=live" target="_blank" rel="noopener noreferrer">🐦 Twitter/X</a>
+        <a class="ext-link" href="https://www.youtube.com/results?search_query=Racing+Club+Argentina+hoy" target="_blank" rel="noopener noreferrer">▶️ YouTube</a>
+        <a class="ext-link" href="https://www.google.com/search?q=Racing+Club+resultados+hoy" target="_blank" rel="noopener noreferrer">🔍 Resultados hoy</a>
+      </div>
+      <div class="search-box">
+        <label for="q-racing" class="search-label">Buscar sobre Racing</label>
+        <div class="search-row">
+          <input id="q-racing" type="search" placeholder="ej: fixture, plantel, Copa..." />
+          <button class="search-btn" data-team="Racing Club Argentina" data-input="q-racing">Buscar</button>
+        </div>
+      </div>
+      <div class="pill-row">
+        <a class="pill" href="https://www.google.com/search?q=Racing+Club+fixture+2026" target="_blank" rel="noopener noreferrer">📅 Fixture</a>
+        <a class="pill" href="https://www.google.com/search?q=Racing+Club+Copa+Libertadores+2025" target="_blank" rel="noopener noreferrer">🏆 Libertadores</a>
+        <a class="pill" href="https://www.google.com/search?q=Racing+Club+transferencias+2026" target="_blank" rel="noopener noreferrer">🔄 Pases</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- INDEPENDIENTE -->
+  <div class="modal-overlay" id="modal-indep" role="dialog" aria-modal="true" aria-label="Independiente" hidden>
+    <div class="modal-sheet">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <div class="modal-title" style="color:#ff6b6b">🔴 INDEPENDIENTE
+        <button class="modal-close" aria-label="Cerrar" data-close="modal-indep">✕</button>
+      </div>
+      <div class="link-grid">
+        <a class="ext-link" href="https://news.google.com/search?q=Independiente+Avellaneda&hl=es-419" target="_blank" rel="noopener noreferrer">📰 Google News</a>
+        <a class="ext-link" href="https://www.ole.com.ar/independiente" target="_blank" rel="noopener noreferrer">⚽ Olé</a>
+        <a class="ext-link" href="https://www.infobae.com/deportes/futbol/independiente/" target="_blank" rel="noopener noreferrer">📱 Infobae</a>
+        <a class="ext-link" href="https://twitter.com/search?q=Independiente+Avellaneda&f=live" target="_blank" rel="noopener noreferrer">🐦 Twitter/X</a>
+        <a class="ext-link" href="https://www.youtube.com/results?search_query=Independiente+Avellaneda+hoy" target="_blank" rel="noopener noreferrer">▶️ YouTube</a>
+        <a class="ext-link" href="https://www.google.com/search?q=Independiente+resultados+hoy" target="_blank" rel="noopener noreferrer">🔍 Resultados hoy</a>
+      </div>
+      <div class="search-box">
+        <label for="q-indep" class="search-label">Buscar sobre Independiente</label>
+        <div class="search-row">
+          <input id="q-indep" type="search" placeholder="ej: fixture, plantel, pases..." />
+          <button class="search-btn" data-team="Independiente Avellaneda" data-input="q-indep">Buscar</button>
+        </div>
+      </div>
+      <div class="pill-row">
+        <a class="pill" href="https://www.google.com/search?q=Independiente+fixture+2026" target="_blank" rel="noopener noreferrer">📅 Fixture</a>
+        <a class="pill" href="https://www.google.com/search?q=Independiente+tabla+posiciones+2026" target="_blank" rel="noopener noreferrer">🏆 Posiciones</a>
+        <a class="pill" href="https://www.google.com/search?q=Independiente+transferencias+2026" target="_blank" rel="noopener noreferrer">🔄 Pases</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLA -->
+  <div class="modal-overlay" id="modal-tabla" role="dialog" aria-modal="true" aria-label="Tabla de Posiciones" hidden>
+    <div class="modal-sheet">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <div class="modal-title" style="color:#7ec8ff">🏆 Tabla de Posiciones
+        <button class="modal-close" aria-label="Cerrar" data-close="modal-tabla">✕</button>
+      </div>
+      <p class="modal-notice">Los datos cambian cada fecha. Consultá las fuentes en tiempo real:</p>
+      <div class="link-grid">
+        <a class="ext-link" href="https://www.google.com/search?q=tabla+posiciones+liga+profesional+argentina+2026" target="_blank" rel="noopener noreferrer">🔍 Google (live)</a>
+        <a class="ext-link" href="https://www.infobae.com/deportes/futbol/liga-profesional/" target="_blank" rel="noopener noreferrer">📱 Infobae</a>
+        <a class="ext-link" href="https://www.ole.com.ar/liga-profesional" target="_blank" rel="noopener noreferrer">⚽ Olé</a>
+        <a class="ext-link" href="https://www.flashscore.es/futbol/argentina/liga-profesional/" target="_blank" rel="noopener noreferrer">⚡ Flashscore</a>
+        <a class="ext-link" href="https://www.sofascore.com/tournament/football/argentina/liga-profesional/155" target="_blank" rel="noopener noreferrer">📊 Sofascore</a>
+        <a class="ext-link" href="https://www.livescore.com/es/futbol/argentina/liga-profesional/" target="_blank" rel="noopener noreferrer">🔴 Livescore</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- REAL MADRID -->
+  <div class="modal-overlay" id="modal-madrid" role="dialog" aria-modal="true" aria-label="Real Madrid" hidden>
+    <div class="modal-sheet">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <div class="modal-title" style="color:#f5c518">⚽ REAL MADRID
+        <button class="modal-close" aria-label="Cerrar" data-close="modal-madrid">✕</button>
+      </div>
+      <div class="link-grid">
+        <a class="ext-link" href="https://news.google.com/search?q=Real+Madrid&hl=es-419" target="_blank" rel="noopener noreferrer">📰 Google News</a>
+        <a class="ext-link" href="https://www.google.com/search?q=Real+Madrid+resultado+hoy" target="_blank" rel="noopener noreferrer">🔍 Resultado hoy</a>
+        <a class="ext-link" href="https://www.marca.com/futbol/real-madrid.html" target="_blank" rel="noopener noreferrer">📋 Marca</a>
+        <a class="ext-link" href="https://twitter.com/search?q=Real+Madrid&f=live" target="_blank" rel="noopener noreferrer">🐦 Twitter/X</a>
+        <a class="ext-link" href="https://www.youtube.com/results?search_query=Real+Madrid+highlights" target="_blank" rel="noopener noreferrer">▶️ Highlights</a>
+        <a class="ext-link" href="https://www.google.com/search?q=Real+Madrid+Champions+League+2026" target="_blank" rel="noopener noreferrer">🏆 Champions</a>
+      </div>
+      <div class="search-box">
+        <label for="q-madrid" class="search-label">Buscar sobre Real Madrid</label>
+        <div class="search-row">
+          <input id="q-madrid" type="search" placeholder="ej: Mbappé, LaLiga, fichajes..." />
+          <button class="search-btn" data-team="Real Madrid" data-input="q-madrid">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PSG -->
+  <div class="modal-overlay" id="modal-psg" role="dialog" aria-modal="true" aria-label="PSG" hidden>
+    <div class="modal-sheet">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <div class="modal-title" style="color:#7ec8ff">⚽ PARIS SAINT-GERMAIN
+        <button class="modal-close" aria-label="Cerrar" data-close="modal-psg">✕</button>
+      </div>
+      <div class="link-grid">
+        <a class="ext-link" href="https://news.google.com/search?q=PSG+Paris+Saint+Germain&hl=es-419" target="_blank" rel="noopener noreferrer">📰 Google News</a>
+        <a class="ext-link" href="https://www.google.com/search?q=PSG+resultado+hoy" target="_blank" rel="noopener noreferrer">🔍 Resultado hoy</a>
+        <a class="ext-link" href="https://www.google.com/search?q=Ligue+1+tabla+posiciones+2026" target="_blank" rel="noopener noreferrer">🏆 Ligue 1</a>
+        <a class="ext-link" href="https://twitter.com/search?q=PSG&f=live" target="_blank" rel="noopener noreferrer">🐦 Twitter/X</a>
+        <a class="ext-link" href="https://www.youtube.com/results?search_query=PSG+highlights+2026" target="_blank" rel="noopener noreferrer">▶️ Highlights</a>
+        <a class="ext-link" href="https://www.google.com/search?q=PSG+Champions+League+2026" target="_blank" rel="noopener noreferrer">🏆 Champions</a>
+      </div>
+      <div class="search-box">
+        <label for="q-psg" class="search-label">Buscar sobre PSG</label>
+        <div class="search-row">
+          <input id="q-psg" type="search" placeholder="ej: Dembélé, Ligue 1, fichajes..." />
+          <button class="search-btn" data-team="PSG Paris Saint-Germain" data-input="q-psg">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTER MILÁN -->
+  <div class="modal-overlay" id="modal-inter" role="dialog" aria-modal="true" aria-label="Inter de Milán" hidden>
+    <div class="modal-sheet">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <div class="modal-title" style="color:#a0c0ff">⚽ INTER DE MILÁN
+        <button class="modal-close" aria-label="Cerrar" data-close="modal-inter">✕</button>
+      </div>
+      <div class="link-grid">
+        <a class="ext-link" href="https://news.google.com/search?q=Inter+Milan&hl=es-419" target="_blank" rel="noopener noreferrer">📰 Google News</a>
+        <a class="ext-link" href="https://www.google.com/search?q=Inter+Milan+resultado+hoy" target="_blank" rel="noopener noreferrer">🔍 Resultado hoy</a>
+        <a class="ext-link" href="https://www.google.com/search?q=Serie+A+tabla+posiciones+2026" target="_blank" rel="noopener noreferrer">🏆 Serie A</a>
+        <a class="ext-link" href="https://twitter.com/search?q=Inter+Milan&f=live" target="_blank" rel="noopener noreferrer">🐦 Twitter/X</a>
+        <a class="ext-link" href="https://www.youtube.com/results?search_query=Inter+Milan+highlights" target="_blank" rel="noopener noreferrer">▶️ Highlights</a>
+        <a class="ext-link" href="https://www.google.com/search?q=Inter+Milan+Champions+2026" target="_blank" rel="noopener noreferrer">🏆 Champions</a>
+      </div>
+      <div class="search-box">
+        <label for="q-inter" class="search-label">Buscar sobre Inter</label>
+        <div class="search-row">
+          <input id="q-inter" type="search" placeholder="ej: Lautaro, Serie A, fichajes..." />
+          <button class="search-btn" data-team="Inter Milan" data-input="q-inter">Buscar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTER MIAMI -->
+  <div class="modal-overlay" id="modal-miami" role="dialog" aria-modal="true" aria-label="Inter Miami" hidden>
+    <div class="modal-sheet">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <div class="modal-title" style="color:#ffb3d9">🌴 INTER MIAMI CF
+        <button class="modal-close" aria-label="Cerrar" data-close="modal-miami">✕</button>
+      </div>
+      <div class="link-grid">
+        <a class="ext-link" href="https://news.google.com/search?q=Inter+Miami+MLS&hl=es-419" target="_blank" rel="noopener noreferrer">📰 Google News</a>
+        <a class="ext-link" href="https://www.google.com/search?q=Inter+Miami+resultado+hoy" target="_blank" rel="noopener noreferrer">🔍 Resultado hoy</a>
+        <a class="ext-link" href="https://www.google.com/search?q=MLS+tabla+posiciones+2026" target="_blank" rel="noopener noreferrer">🏆 MLS tabla</a>
+        <a class="ext-link" href="https://twitter.com/search?q=Inter+Miami&f=live" target="_blank" rel="noopener noreferrer">🐦 Twitter/X</a>
+        <a class="ext-link" href="https://www.youtube.com/results?search_query=Inter+Miami+highlights+2026" target="_blank" rel="noopener noreferrer">▶️ Highlights</a>
+        <a class="ext-link" href="https://www.google.com/search?q=Messi+Inter+Miami+2026" target="_blank" rel="noopener noreferrer">🐐 Messi</a>
+      </div>
+      <div class="search-box">
+        <label for="q-miami" class="search-label">Buscar sobre Inter Miami</label>
+        <div class="search-row">
+          <input id="q-miami" type="search" placeholder="ej: Messi, Suárez, fixture..." />
+          <button class="search-btn" data-team="Inter Miami MLS" data-input="q-miami">Buscar</button>
+        </div>
+      </div>
+      <div class="pill-row">
+        <a class="pill" href="https://www.google.com/search?q=Inter+Miami+fixture+2026" target="_blank" rel="noopener noreferrer">📅 Fixture</a>
+        <a class="pill" href="https://www.google.com/search?q=Inter+Miami+Messi+noticias" target="_blank" rel="noopener noreferrer">🐐 Noticias Messi</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIBERTADORES -->
+  <div class="modal-overlay" id="modal-lib" role="dialog" aria-modal="true" aria-label="Copa Libertadores" hidden>
+    <div class="modal-sheet">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <div class="modal-title" style="color:#80ffba">🏆 COPA LIBERTADORES 2025
+        <button class="modal-close" aria-label="Cerrar" data-close="modal-lib">✕</button>
+      </div>
+      <div class="link-grid">
+        <a class="ext-link" href="https://news.google.com/search?q=Copa+Libertadores+2025&hl=es-419" target="_blank" rel="noopener noreferrer">📰 Google News</a>
+        <a class="ext-link" href="https://www.google.com/search?q=Copa+Libertadores+resultados+hoy" target="_blank" rel="noopener noreferrer">🔍 Resultados hoy</a>
+        <a class="ext-link" href="https://www.google.com/search?q=Copa+Libertadores+tabla+grupos+2025" target="_blank" rel="noopener noreferrer">📊 Tabla grupos</a>
+        <a class="ext-link" href="https://twitter.com/search?q=Copa+Libertadores&f=live" target="_blank" rel="noopener noreferrer">🐦 Twitter/X</a>
+        <a class="ext-link" href="https://www.youtube.com/results?search_query=Copa+Libertadores+2025+goles" target="_blank" rel="noopener noreferrer">▶️ Goles</a>
+        <a class="ext-link" href="https://www.conmebol.com/copa-libertadores/" target="_blank" rel="noopener noreferrer">🌎 CONMEBOL</a>
+      </div>
+      <div class="search-box">
+        <label for="q-lib" class="search-label">Buscar en la Libertadores</label>
+        <div class="search-row">
+          <input id="q-lib" type="search" placeholder="ej: Boca, River, grupos..." />
+          <button class="search-btn" data-team="Copa Libertadores 2025" data-input="q-lib">Buscar</button>
+        </div>
+      </div>
+      <div class="pill-row">
+        <a class="pill" href="https://www.google.com/search?q=equipos+argentinos+libertadores+2025" target="_blank" rel="noopener noreferrer">🇦🇷 Equipos ARG</a>
+        <a class="pill" href="https://www.google.com/search?q=Copa+Libertadores+fixture+2025" target="_blank" rel="noopener noreferrer">📅 Fixture</a>
+        <a class="pill" href="https://www.flashscore.es/copa-libertadores/" target="_blank" rel="noopener noreferrer">⚡ Flashscore</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MUNDIAL 2026 -->
+  <div class="modal-overlay" id="modal-mundial" role="dialog" aria-modal="true" aria-label="Mundial FIFA 2026" hidden>
+    <div class="modal-sheet">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <div class="modal-title" style="color:#e9d5ff">🌍 MUNDIAL FIFA 2026
+        <button class="modal-close" aria-label="Cerrar" data-close="modal-mundial">✕</button>
+      </div>
+      <div class="link-grid">
+        <a class="ext-link" href="https://news.google.com/search?q=Mundial+FIFA+2026&hl=es-419" target="_blank" rel="noopener noreferrer">📰 Google News</a>
+        <a class="ext-link" href="https://www.google.com/search?q=Mundial+2026+Argentina" target="_blank" rel="noopener noreferrer">🇦🇷 Argentina</a>
+        <a class="ext-link" href="https://www.fifa.com/fifaplus/es/tournaments/mens/worldcup/canadamexicousa2026" target="_blank" rel="noopener noreferrer">🌐 FIFA Oficial</a>
+        <a class="ext-link" href="https://twitter.com/search?q=Mundial+2026&f=live" target="_blank" rel="noopener noreferrer">🐦 Twitter/X</a>
+        <a class="ext-link" href="https://www.youtube.com/results?search_query=Mundial+FIFA+2026" target="_blank" rel="noopener noreferrer">▶️ YouTube</a>
+        <a class="ext-link" href="https://www.infobae.com/deportes/futbol/mundial-2026/" target="_blank" rel="noopener noreferrer">📱 Infobae</a>
+      </div>
+      <div class="search-box">
+        <label for="q-mundial" class="search-label">Buscar sobre el Mundial</label>
+        <div class="search-row">
+          <input id="q-mundial" type="search" placeholder="ej: fixture, sedes, clasificación..." />
+          <button class="search-btn" data-team="Mundial FIFA 2026" data-input="q-mundial">Buscar</button>
+        </div>
+      </div>
+      <div class="pill-row">
+        <a class="pill" href="https://www.google.com/search?q=Mundial+2026+sedes+ciudades" target="_blank" rel="noopener noreferrer">🏟 Sedes</a>
+        <a class="pill" href="https://www.google.com/search?q=Mundial+2026+clasificacion+conmebol" target="_blank" rel="noopener noreferrer">📊 Clasificación</a>
+        <a class="pill" href="https://www.google.com/search?q=Mundial+2026+fixture+grupos" target="_blank" rel="noopener noreferrer">📅 Fixture</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- INFO GENERAL -->
+  <div class="modal-overlay" id="modal-info" role="dialog" aria-modal="true" aria-label="Info General" hidden>
+    <div class="modal-sheet">
+      <div class="modal-handle" aria-hidden="true"></div>
+      <div class="modal-title" style="color:#c9a8ff">🌐 INFO GENERAL
+        <button class="modal-close" aria-label="Cerrar" data-close="modal-info">✕</button>
+      </div>
+
+      <!-- Buscador -->
+      <div class="info-block">
+        <h3 class="info-block-title">🔍 Buscador Universal</h3>
+        <div class="search-row" style="margin-top:8px">
+          <input id="q-general" type="search" placeholder="¿Qué querés buscar?" />
+          <button class="search-btn" id="btn-general">Buscar</button>
+        </div>
+        <div class="link-grid" style="margin-top:10px">
+          <a class="ext-link" href="https://www.google.com" target="_blank" rel="noopener noreferrer">🔍 Google</a>
+          <a class="ext-link" href="https://www.mercadolibre.com.ar" target="_blank" rel="noopener noreferrer">🛒 Mercado Libre</a>
+          <a class="ext-link" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">▶️ YouTube</a>
+          <a class="ext-link" href="https://news.google.com/?hl=es-419&gl=AR" target="_blank" rel="noopener noreferrer">📰 Google News</a>
+          <a class="ext-link" href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer">🗺️ Maps</a>
+          <a class="ext-link" href="https://www.google.com/travel/flights?hl=es-AR" target="_blank" rel="noopener noreferrer">✈️ Vuelos</a>
+        </div>
+      </div>
+
+      <!-- Clima -->
+      <div class="info-block">
+        <h3 class="info-block-title">🌤 Clima Argentina</h3>
+        <p class="modal-notice">Consultá el clima en tiempo real en tu ciudad:</p>
+        <div class="link-grid" style="margin-top:8px">
+          <a class="ext-link" href="https://www.google.com/search?q=clima+Buenos+Aires+hoy" target="_blank" rel="noopener noreferrer">🌆 Bs. Aires</a>
+          <a class="ext-link" href="https://www.google.com/search?q=clima+Córdoba+Argentina+hoy" target="_blank" rel="noopener noreferrer">🌆 Córdoba</a>
+          <a class="ext-link" href="https://www.google.com/search?q=clima+Rosario+hoy" target="_blank" rel="noopener noreferrer">🌆 Rosario</a>
+          <a class="ext-link" href="https://www.smn.gob.ar" target="_blank" rel="noopener noreferrer">🌡️ SMN Oficial</a>
+        </div>
+      </div>
+
+      <!-- CALENDARIO -->
+      <div class="info-block">
+        <h3 class="info-block-title">🗓 Calendario 2026</h3>
+        <div class="cal-header">
+          <button class="cal-nav" id="calPrev" aria-label="Mes anterior">‹</button>
+          <span class="cal-month-name" id="calTitle">—</span>
+          <button class="cal-nav" id="calNext" aria-label="Mes siguiente">›</button>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="cal-legend">
+          <span><span style="display:inline-block;width:12px;height:12px;background:var(--gold);border-radius:50%"></span> Hoy</span>
+          <span><span style="color:#ff6b6b;font-weight:800;font-size:1rem">•</span> Feriado</span>
+        </div>
+        <div class="holiday-detail" id="calHolidays"></div>
+      </div>
+
+      <!-- Teléfonos -->
+      <div class="info-block">
+        <h3 class="info-block-title">📞 Teléfonos de Emergencia</h3>
+        <ul class="phone-list">
+          <li><span>🚑 Emergencias / SAME</span><a href="tel:107">107</a></li>
+          <li><span>🚒 Bomberos</span><a href="tel:100">100</a></li>
+          <li><span>👮 Policía</span><a href="tel:101">101</a></li>
+          <li><span>🚨 Sistema único</span><a href="tel:911">911</a></li>
+          <li><span>💊 Toxicología</span><a href="tel:08003330160">0800-333-0160</a></li>
+          <li><span>🌊 Defensa Civil</span><a href="tel:103">103</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+
+  <script>
+    'use strict';
+
+    /* ── FERIADOS 2026 ARGENTINA (fuente: decreto oficial) ── */
+    const FERIADOS_2026 = [
+      { mes: 0,  dia: 1,  nombre: 'Año Nuevo' },
+      { mes: 1,  dia: 16, nombre: 'Carnaval' },
+      { mes: 1,  dia: 17, nombre: 'Carnaval' },
+      { mes: 2,  dia: 23, nombre: 'Día de la Memoria' },
+      { mes: 3,  dia: 2,  nombre: 'Veteranos de Malvinas' },
+      { mes: 3,  dia: 3,  nombre: 'Viernes Santo' },
+      { mes: 4,  dia: 1,  nombre: 'Día del Trabajador' },
+      { mes: 4,  dia: 25, nombre: 'Revolución de Mayo' },
+      { mes: 5,  dia: 15, nombre: 'Paso a la Inmortalidad de Güemes' },
+      { mes: 5,  dia: 20, nombre: 'Paso a la Inmortalidad de Belgrano' },
+      { mes: 6,  dia: 9,  nombre: 'Día de la Independencia' },
+      { mes: 7,  dia: 17, nombre: 'Paso a la Inmortalidad de San Martín' },
+      { mes: 9,  dia: 12, nombre: 'Día del Respeto a la Diversidad Cultural' },
+      { mes: 10, dia: 23, nombre: 'Día de la Soberanía Nacional' },
+      { mes: 11, dia: 8,  nombre: 'Inmaculada Concepción de María' },
+      { mes: 11, dia: 25, nombre: 'Navidad' },
+    ];
+
+    /* ── RELOJ ── */
+    const DAYS   = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+    const MONTHS_SHORT = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    const MONTHS_FULL  = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+    function updateClock() {
+      const now = new Date();
+      const dayEl  = document.getElementById('hdrDay');
+      const timeEl = document.getElementById('hdrTime');
+      if (dayEl)  dayEl.textContent  = `${DAYS[now.getDay()]} ${now.getDate()} ${MONTHS_SHORT[now.getMonth()]}`;
+      if (timeEl) timeEl.textContent = now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+    }
+    updateClock();
+    setInterval(updateClock, 30_000);
+
+    /* ── CALENDARIO ── */
+    let calYear, calMonth;
+
+    function initCal() {
+      const now = new Date();
+      calYear  = now.getFullYear();
+      calMonth = now.getMonth();
+      renderCal();
+    }
+
+    function isHoliday(year, month, day) {
+      return FERIADOS_2026.find(f => f.mes === month && f.dia === day) || null;
+    }
+
+    function renderCal() {
+      const title = document.getElementById('calTitle');
+      const grid  = document.getElementById('calGrid');
+      const info  = document.getElementById('calHolidays');
+      if (!title || !grid) return;
+
+      title.textContent = `${MONTHS_FULL[calMonth]} ${calYear}`;
+
+      const today     = new Date();
+      const todayY    = today.getFullYear();
+      const todayM    = today.getMonth();
+      const todayD    = today.getDate();
+
+      const firstDay  = new Date(calYear, calMonth, 1).getDay(); // 0=Sun
+      const daysInMon = new Date(calYear, calMonth + 1, 0).getDate();
+
+      const DOW = ['D','L','M','X','J','V','S'];
+      let html = DOW.map(d => `<div class="cal-dow">${d}</div>`).join('');
+
+      // Empty cells before first day
+      for (let i = 0; i < firstDay; i++) html += `<div class="cal-day empty"></div>`;
+
+      for (let d = 1; d <= daysInMon; d++) {
+        const isToday   = (calYear === todayY && calMonth === todayM && d === todayD);
+        const holiday   = isHoliday(calYear, calMonth, d);
+        let cls = 'cal-day';
+        if (isToday)  cls += ' today';
+        if (holiday)  cls += ' holiday';
+        html += `<div class="${cls}" title="${holiday ? holiday.nombre : ''}">${d}</div>`;
+      }
+
+      grid.innerHTML = html;
+
+      // Holidays this month
+      const thisMonthHolidays = FERIADOS_2026.filter(f => f.mes === calMonth);
+      if (thisMonthHolidays.length > 0) {
+        info.innerHTML = `<div class="holiday-detail-title">📅 Feriados este mes</div>` +
+          thisMonthHolidays.map(f =>
+            `<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:0.8rem">
+              <span>${f.nombre}</span>
+              <span style="color:var(--gold);font-weight:800">${f.dia} ${MONTHS_SHORT[f.mes]}</span>
+            </div>`
+          ).join('');
+      } else {
+        info.innerHTML = `<div class="holiday-detail-title" style="margin-bottom:0">Sin feriados este mes</div>`;
+      }
+    }
+
+    document.getElementById('calPrev')?.addEventListener('click', () => {
+      calMonth--;
+      if (calMonth < 0) { calMonth = 11; calYear--; }
+      renderCal();
+    });
+    document.getElementById('calNext')?.addEventListener('click', () => {
+      calMonth++;
+      if (calMonth > 11) { calMonth = 0; calYear++; }
+      renderCal();
+    });
+
+    // Init calendar when info modal opens
+    document.addEventListener('modalOpened', e => {
+      if (e.detail === 'modal-info') initCal();
+    });
+
+    /* ── MODAL SYSTEM ── */
+    let activeModalId = null;
+
+    function openModal(id) {
+      const overlay = document.getElementById(id);
+      if (!overlay) return;
+      if (activeModalId && activeModalId !== id) closeModal(activeModalId);
+      overlay.removeAttribute('hidden');
+      activeModalId = id;
+      document.body.style.overflow = 'hidden';
+      document.dispatchEvent(new CustomEvent('modalOpened', { detail: id }));
+      const sheet = overlay.querySelector('.modal-sheet');
+      if (sheet) { sheet.setAttribute('tabindex', '-1'); sheet.focus({ preventScroll: true }); }
+    }
+
+    function closeModal(id) {
+      const overlay = document.getElementById(id);
+      if (!overlay) return;
+      overlay.setAttribute('hidden', '');
+      if (activeModalId === id) {
+        activeModalId = null;
+        document.body.style.overflow = '';
+      }
+    }
+
+    document.querySelectorAll('[data-modal]').forEach(trigger => {
+      trigger.addEventListener('click', () => openModal(trigger.dataset.modal));
+    });
+
+    document.querySelectorAll('[data-close]').forEach(btn => {
+      btn.addEventListener('click', e => { e.stopPropagation(); closeModal(btn.dataset.close); });
+    });
+
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(overlay.id); });
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && activeModalId) closeModal(activeModalId);
+    });
+
+    /* ── BÚSQUEDA ── */
+    function searchTeam(team, inputId) {
+      const input = document.getElementById(inputId);
+      const extra = input ? input.value.trim() : '';
+      const query = extra ? `${team} ${extra}` : `${team} noticias hoy`;
+      window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank', 'noopener,noreferrer');
+    }
+
+    function doGeneralSearch() {
+      const input = document.getElementById('q-general');
+      const val   = input ? input.value.trim() : '';
+      if (!val) { input && input.focus(); return; }
+      window.open(`https://www.google.com/search?q=${encodeURIComponent(val)}`, '_blank', 'noopener,noreferrer');
+    }
+
+    document.querySelectorAll('.search-btn[data-team]').forEach(btn => {
+      btn.addEventListener('click', () => searchTeam(btn.dataset.team, btn.dataset.input));
+    });
+
+    const btnGeneral = document.getElementById('btn-general');
+    if (btnGeneral) btnGeneral.addEventListener('click', doGeneralSearch);
+
+    document.querySelectorAll('input[type="search"]').forEach(input => {
+      input.addEventListener('keydown', e => {
+        if (e.key !== 'Enter') return;
+        e.preventDefault();
+        if (input.id === 'q-general') { doGeneralSearch(); return; }
+        const btn = input.closest('.search-row, .search-box')?.querySelector('.search-btn[data-team]');
+        if (btn) btn.click();
+      });
+    });
+  </script>
+
+</body>
+</html>
